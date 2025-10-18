@@ -1,30 +1,27 @@
 #include "esp_camera.h"
 #include "SD_MMC.h"
 
-// Select camera model
-//#define CAMERA_MODEL_WROVER_KIT // Has PSRAM
-//#define CAMERA_MODEL_ESP_EYE // Has PSRAM
-//#define CAMERA_MODEL_M5STACK_PSRAM // Has PSRAM
-//#define CAMERA_MODEL_M5STACK_V2_PSRAM // M5Camera version B Has PSRAM
-//#define CAMERA_MODEL_M5STACK_WIDE // Has PSRAM
-//#define CAMERA_MODEL_M5STACK_ESP32CAM // No PSRAM
-#define CAMERA_MODEL_AI_THINKER // Has PSRAM
-//#define CAMERA_MODEL_TTGO_T_JOURNAL // No PSRAM
-
+#define CAMERA_MODEL_AI_THINKER
 #include "camera_pins.h"
 
-const char * photoPrefix = "/photo_";
+// 📸 Fotoğraf isimlendirme
+const char *photoPrefix = "/photo_";
 int photoNumber = 0;
-#define BUTTON_PIN 12  
-#define FLASH_GPIO_NUM 4
 
+// ⚙️ Donanım pinleri
+#define BUTTON_PIN 12      // Fotoğraf çekme butonu
+#define FLASH_GPIO_NUM 4   // Flaş LED pini
 
 void setup() {
   Serial.begin(115200);
-  Serial.setDebugOutput(true);
-  Serial.println();
-  pinMode(BUTTON_PIN, INPUT_PULLUP); 
+  Serial.setDebugOutput(false);
+  Serial.println("\n🚀 ESP32-CAM başlatılıyor...");
 
+  pinMode(BUTTON_PIN, INPUT_PULLUP);
+  pinMode(FLASH_GPIO_NUM, OUTPUT);
+  digitalWrite(FLASH_GPIO_NUM, LOW);
+
+  // 📷 Kamera konfigürasyonu
   camera_config_t config;
   config.ledc_channel = LEDC_CHANNEL_0;
   config.ledc_timer = LEDC_TIMER_0;
@@ -48,90 +45,111 @@ void setup() {
   config.pixel_format = PIXFORMAT_JPEG;
 
   if (psramFound()) {
-    config.frame_size = FRAMESIZE_UXGA;
+    config.frame_size = FRAMESIZE_SVGA;
     config.jpeg_quality = 10;
     config.fb_count = 2;
   } else {
-    config.frame_size = FRAMESIZE_SVGA;
+    config.frame_size = FRAMESIZE_VGA;
     config.jpeg_quality = 12;
     config.fb_count = 1;
     config.fb_location = CAMERA_FB_IN_DRAM;
   }
 
-  #if defined(CAMERA_MODEL_ESP_EYE)
-  pinMode(13, INPUT_PULLUP);
-  pinMode(14, INPUT_PULLUP);
-  #endif
-
-  // camera init
-  esp_err_t err = esp_camera_init( & config);
+  // 🎥 Kamera başlat
+  esp_err_t err = esp_camera_init(&config);
   if (err != ESP_OK) {
-    Serial.printf("Camera init failed with error 0x%x", err);
+    Serial.printf("❌ Kamera başlatma hatası! Hata kodu: 0x%x\n", err);
     return;
   }
 
-  sensor_t * s = esp_camera_sensor_get();
-  // initial sensors are flipped vertically and colors are a bit saturated
-  if (s -> id.PID == OV3660_PID) {
-    s -> set_vflip(s, 1); // flip it back
-    s -> set_brightness(s, 1); // up the brightness just a bit
-    s -> set_saturation(s, -2); // lower the saturation
-  }
-  // drop down frame size for higher initial frame rate
-  s -> set_framesize(s, FRAMESIZE_QVGA);
-
-  #if defined(CAMERA_MODEL_M5STACK_WIDE) || defined(CAMERA_MODEL_M5STACK_ESP32CAM)
-  s -> set_vflip(s, 1);
-  s -> set_hmirror(s, 1);
-  #endif
-
-  Serial.println("Initialising SD card");
-  if (!SD_MMC.begin()) {
-    Serial.println("Failed to initialise SD card!");
+  // 💾 SD kart başlat
+  Serial.println("💾 SD kart başlatılıyor...");
+  if (!SD_MMC.begin("/sdcard", true)) {
+    Serial.println("❌ SD kart başlatılamadı!");
     return;
   }
 
   uint8_t cardType = SD_MMC.cardType();
   if (cardType == CARD_NONE) {
-    Serial.println("SD card slot appears to be empty!");
+    Serial.println("❌ SD kart takılı değil!");
     return;
   }
 
-  pinMode(FLASH_GPIO_NUM, OUTPUT);
-  digitalWrite(FLASH_GPIO_NUM, LOW);
+  Serial.println("✅ SD kart başarıyla monte edildi!");
 
+  // 📂 En son fotoğraf numarasını bul
+  int lastPhoto = getLastPhotoNumber();
+  photoNumber = lastPhoto + 1; // Yeni fotoğraf numarası
+  Serial.printf("📷 Son fotoğraf numarası: %d → Yeni fotoğraf: photo_%d.jpg\n",
+                lastPhoto, photoNumber);
 }
 
 void loop() {
   if (digitalRead(BUTTON_PIN) == LOW) {
-    Serial.println("📸 Button pressed, taking photo...");
-    delay(200);
+    Serial.println("📸 Butona basıldı! Fotoğraf çekiliyor...");
+
+    // 🔦 Flaş aç
     digitalWrite(FLASH_GPIO_NUM, HIGH);
-  camera_fb_t * fb = NULL;
-  fb = esp_camera_fb_get();
-  if (!fb) {
-    Serial.println("Camera capture failed");
-    return;
+    delay(200); // ışığın oturması için
+
+    // 📷 Fotoğraf al
+    camera_fb_t *fb = esp_camera_fb_get();
+    if (!fb) {
+      Serial.println("❌ Kamera görüntüsü alınamadı!");
+      digitalWrite(FLASH_GPIO_NUM, LOW);
+      return;
+    }
+
+    // 📁 Dosya adı oluştur
+    String photoFileName = String(photoPrefix) + String(photoNumber) + ".jpg";
+    Serial.printf("📄 Dosya adı: %s\n", photoFileName.c_str());
+
+    // 💾 SD karta yaz
+    File file = SD_MMC.open(photoFileName, FILE_WRITE);
+    if (!file) {
+      Serial.println("❌ SD karta yazma hatası (FILE_WRITE başarısız)");
+    } else {
+      file.write(fb->buf, fb->len);
+      file.close();
+      Serial.printf("✅ Fotoğraf kaydedildi: %s (Boyut: %d bayt)\n", photoFileName.c_str(), fb->len);
+      photoNumber++;
+    }
+
+    esp_camera_fb_return(fb);
+    delay(500);
+    digitalWrite(FLASH_GPIO_NUM, LOW);  // Flaş kapat
+    delay(1000); // Titreşim engelleme
+  }
+}
+
+// 📂 SD karttaki en son fotoğraf numarasını bulan fonksiyon
+int getLastPhotoNumber() {
+  int maxNum = -1;
+  File root = SD_MMC.open("/");
+  if (!root) {
+    Serial.println("❌ SD kart dizini açılamadı!");
+    return -1;
   }
 
-  String photoFileName = photoPrefix + String(photoNumber) + ".jpg";
-  fs::FS & fs = SD_MMC;
-  Serial.printf("Picture file name: %s\n", photoFileName.c_str());
+  root.rewindDirectory();  // Tarama başından başlat
+  File file = root.openNextFile();
+  while (file) {
+    String name = file.name();
+    name.toLowerCase();
 
-  File file = fs.open(photoFileName.c_str(), FILE_WRITE);
-  if (!file) {
-    digitalWrite(FLASH_GPIO_NUM, HIGH);
-    delay(300);
-    digitalWrite(FLASH_GPIO_NUM, LOW);
-    Serial.println("Failed to open file in writing mode");
-  } else {
-    file.write(fb -> buf, fb -> len);
-    Serial.printf("Saved file to path: %s\n", photoFileName.c_str());
-    ++photoNumber;
+    if (name.startsWith("photo_") && name.endsWith(".jpg")) {
+      int start = name.indexOf('_') + 1;
+      int end = name.indexOf('.');
+      if (start > 0 && end > start) {
+        int num = name.substring(start, end).toInt();
+        if (num > maxNum) maxNum = num;
+      }
+    }
+
+    file.close(); // Dosyayı kapat
+    file = root.openNextFile();
   }
-  file.close();
-  esp_camera_fb_return(fb);
-  delay(3000);
-  digitalWrite(FLASH_GPIO_NUM, LOW);
-  }
+
+  root.close();
+  return maxNum >= 0 ? maxNum : -1;
 }
