@@ -16,7 +16,7 @@
 
 ## 📦 Setup 
 1. `Refer to the circuit diagram`
-2. `Install the 'Arduino IDE' software and open 'esp32-cam_camera.ino' and 5 other file`
+2. `Install the 'Arduino IDE' software and open 'esp32-cam_camera.ino' with 5 other file`
 3. `File>Preferences>Additional Boards Manager URLs:(Click the double window button)`
 >Paste this code  
 ```bash
