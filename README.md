@@ -11,7 +11,7 @@
 ## 🔎 Preparation
 1. `Use an SD card with a minimum capacity of 4 GB, formatted as FAT32 with a 32 KB allocation unit size.`
 2. `Then insert this SD card into your ESP32-CAM board.`
-2. `Connect your OV2640 camera to your ESP32-CAM board.`
+2. `Connect your 'OV2640' camera to your ESP32-CAM board.`
 
 
 ## 📦 Setup 
