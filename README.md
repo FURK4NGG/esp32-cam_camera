@@ -26,7 +26,7 @@ https://dl.espressif.com/dl/package_esp32_index.json
 8. `Plug the ESP32CAM into your computer`
 9. `Tools>Board>esp32>'AI Thinker ESP32-CAM'`
 9. `Tools>Port>'Select the esp's port'`
-10. `CPU Frequency:240MHz(WIFI/BT) \n
+10. `CPU Frequency:240MHz(WIFI/BT) <br>
      asdasd`
 10. `Tools>Manage Libraries...>Install the libraries used in the code`
 11. `Click the 'upload ➡️' button`  
