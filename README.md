@@ -45,9 +45,10 @@ https://dl.espressif.com/dl/package_esp32_index.json
 
 
 ## 🎉 Run  
-1 `Connect the battery to the board`  
-2. `Reset the esp32cam`  
-3. `You are ready to use your mini camera`  
+1. `Connect the battery to the board`  
+2. `Disconnect the IO0-GND connection(disable programming mode)`  
+3. `Press the reset button on the esp32cam`  
+4. `You are ready to use your mini camera`  
 
 
 ## 🔒 License  
