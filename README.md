@@ -30,7 +30,7 @@ https://dl.espressif.com/dl/package_esp32_index.json
 <details>
 <summary>Apply these changes:</summary>
 
-- CPU Frequency: 240MHz (WIFI/BT)
+- CPU Frequency: 240MHz (WiFi/BT)
 - Core Debug Level: None
 - Erase All Flash Before Sketch Upload: Disabled
 - Flash Frequency: 80MHz
