@@ -1,4 +1,5 @@
 <!-- Proje-Resmi -->
+<!-- buton ve batarya eklenmis devre semasi -->
 
 ## 👀 esp32-cam_camera Overview  
 <h1 align="center">A handmade photo camera</h1>  
