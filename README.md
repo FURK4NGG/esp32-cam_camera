@@ -45,7 +45,7 @@ https://dl.espressif.com/dl/package_esp32_index.json
 10. `Tools>Manage Libraries...>Install the libraries used in the code`
 11. `Click the 'upload ➡️' button`  
 ✅ **To make sure it has been uploaded successfully, you should see the message 'Done uploading'** 
-
+> ⚠️ **Advisory for Developers:** If you want to try this project in the future with new generation boards and you want to add new features like using 'DS1302 real time module', you must have 3 unused pins.
 
 ## 🎉 Run  
 1. `Connect the battery to the board`  
