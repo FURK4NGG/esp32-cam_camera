@@ -5,7 +5,7 @@
 
 
 ## 🚀 Features  
-<h1 align="center">This a portable mini photo camera.It has also a flash.</h1>  
+<h1 align="center">This a portable mini photo camera.It has also a flash.Every photo saved with unique name in a sd card storage</h1>  
 
 
 ## 🔎 Preparation
