@@ -26,8 +26,18 @@ https://dl.espressif.com/dl/package_esp32_index.json
 8. `Plug the ESP32CAM into your computer`
 9. `Tools>Board>esp32>'AI Thinker ESP32-CAM'`
 9. `Tools>Port>'Select the esp's port'`
-10. <pre> ```CPU Frequency:240MHz(WIFI/BT) <br>
-     asdasd``` </pre>
+10. <details>
+<summary>Apply these changes:</summary>
+
+- CPU Frequency: 240MHz (WIFI/BT)
+- Core Debug Level: None
+- Erase All Flash Before Sketch Upload: Disabled
+- Flash Frequency: 80MHz
+- Flash Mode: QIO
+- Partition Scheme: Huge APP (3MB No OTA/1MB SPIFFS)
+
+</details>
+
 10. `Tools>Manage Libraries...>Install the libraries used in the code`
 11. `Click the 'upload ➡️' button`  
 ✅ **To make sure it has been uploaded successfully, you should see the message 'Done uploading'** 
