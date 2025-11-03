@@ -15,6 +15,7 @@
 '1' ESP32-CAM<br>
 '1' FT232RL USB to UART Converter<br>
 </details>
+
 2. `Use an SD card with a minimum capacity of 4 GB, formatted as FAT32 with a 32 KB allocation unit size.`
 3. `Then insert this SD card into your ESP32-CAM board.`
 4. `Connect your 'OV2640' camera to your ESP32-CAM board.`
