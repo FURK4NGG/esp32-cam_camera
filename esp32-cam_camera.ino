@@ -9,7 +9,7 @@ const char *photoPrefix = "/photo_";
 int photoNumber = 0;
 
 // ⚙️ Donanım pinleri
-#define BUTTON_PIN 12      // Fotoğraf çekme butonu
+#define BUTTON_PIN 15      // Fotoğraf çekme butonu
 #define FLASH_GPIO_NUM 4   // Flaş LED pini
 
 void setup() {
