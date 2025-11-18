@@ -17,7 +17,7 @@
 '1' MT3608 adjustable DC/DC voltage regulator (3.7V to 5.01 V step-up)<br>
 '1' TP4056 charging circuit (with reverse-current protection)<br>
 '1' Rocker Switch<br>
-'1' Momentary Switch<br>
+'1' Micro Switch<br>
 '1' FT232RL USB to UART Converter<br>
 </details>
 
