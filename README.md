@@ -13,6 +13,11 @@
 <details>
 <summary>1. Components</summary>
 '1' ESP32-CAM<br>
+'1' 3.7V Li-Po Battery<br>
+'1' MT3608 adjustable DC/DC voltage regulator (3.7V to 5.01 V step-up)<br>
+'1' TP4056 charging circuit (with reverse-current protection)<br>
+'1' Rocker Switch<br>
+'1' Momentary Switch<br>
 '1' FT232RL USB to UART Converter<br>
 </details>
 
@@ -60,7 +65,7 @@ https://dl.espressif.com/dl/package_esp32_index.json
 2. `Let the electricity pass through the switch`  
 3. `Press the reset button on the esp32cam`  
 4. `You are ready to use your mini camera`  
-> ⚠️ `After turning on the camera, wait 5 seconds before using it. Turn off the power before removing the SD card. When taking photos, leave at least a 2–3 second interval between shots.` 
+> ⚠️ `After turning on the camera, wait 5 seconds before using it. Turn off the power before removing the SD card. When taking photos, leave at least a 2–3 second interval between shots. Do not cover the front of the flash to prevent a potential fire hazard.` 
 
 
 ## 🔒 License  
