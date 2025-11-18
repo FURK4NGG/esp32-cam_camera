@@ -59,7 +59,7 @@ https://dl.espressif.com/dl/package_esp32_index.json
 1. `Refer to the 'circuit_camera.png' diagram`  
 2. `Let the electricity pass through the switch`  
 3. `Press the reset button on the esp32cam`  
-4. `You are ready to use your mini camera`
+4. `You are ready to use your mini camera`  
 ⚠️ `After turning on the camera, wait 5 seconds before using it. Turn off the power before removing the SD card. When taking photos, leave at least a 2–3 second interval between shots.` 
 
 
