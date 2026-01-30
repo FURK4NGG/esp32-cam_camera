@@ -1,4 +1,5 @@
 <!-- buton ve batarya eklenmis devre semasi -->
+<!-- kameraya filtre uygulama -->
 
 ## 👀 esp32-cam_camera Overview  
 <h1 align="center">A handmade photo camera</h1>  
