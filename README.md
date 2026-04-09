@@ -1,4 +1,3 @@
-<!-- buton ve batarya eklenmis devre semasi -->
 <!-- kameraya filtre uygulama -->
 
 ## 👀 esp32-cam_camera Overview  
