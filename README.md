@@ -4,8 +4,9 @@
 <h1 align="center">A handmade photo camera</h1>  
 
 
-![Image](https://github.com/user-attachments/assets/3c4af890-560e-41b4-befe-887b781ec232)
-![Image](https://github.com/user-attachments/assets/fd2d77c6-06a9-45d8-9174-e7f288d81aed)
+![Image](https://github.com/FURK4NGG/esp32-cam_camera/blob/main/{}/esp32-cam_camera-1.webp)
+
+![Image](https://github.com/FURK4NGG/esp32-cam_camera/blob/main/{}/esp32-cam_camera-2.webp)
 
 
 ## 🚀 Features  
