@@ -7,6 +7,8 @@
 
 ![esp32-cam_camera Demo Image](https://github.com/FURK4NGG/esp32-cam_camera/blob/main/{}/esp32-cam_camera-2.webp)
 
+![esp32-cam_camera Demo Image](https://github.com/FURK4NGG/esp32-cam_camera/blob/main/{}/esp32-cam_camera-3.webp)
+
 ## 🚀 Features  
 <h1 align="center">This a portable mini photo camera.It has also a flash.Every photo saved with unique name in a sd card storage.</h1>  
 
