@@ -1,7 +1,6 @@
 <!-- kameraya filtre uygulama -->
 
 ## 👀 esp32-cam_camera Overview  
-a
 <h1 align="center">A handmade photo camera</h1>  
 
 ![esp32-cam_camera Demo Image](https://github.com/FURK4NGG/esp32-cam_camera/blob/main/{}/esp32-cam_camera-1.webp)
